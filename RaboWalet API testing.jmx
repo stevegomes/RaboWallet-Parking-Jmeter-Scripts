@@ -1,0 +1,1437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13 r1665067">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="RaboWallet Automated API Testing" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Parking for Already Registered User" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1445008776000</longProp>
+        <longProp name="ThreadGroup.end_time">1445008776000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="filename">/Users/stevangomes/Documents/emailrabowallet.csv</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">email</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login Request PIN" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;callbackURL&quot;: &quot;myorder-app:\/\/MyOrder\/verifyLogin\/&quot;,&#xd;
+	&quot;userName&quot;: &quot;${email}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/auth/login/requestPIN</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <MailReaderSampler guiclass="MailReaderSamplerGui" testclass="MailReaderSampler" testname="Mail Reader Sampler" enabled="true">
+          <stringProp name="host_type">imaps</stringProp>
+          <stringProp name="folder">INBOX</stringProp>
+          <stringProp name="host">imap.gmail.com</stringProp>
+          <stringProp name="port">993</stringProp>
+          <stringProp name="username">nehangomes@gmail.com</stringProp>
+          <stringProp name="password">nany@123</stringProp>
+          <intProp name="num_messages">-1</intProp>
+          <boolProp name="delete">false</boolProp>
+          <stringProp name="SMTPSampler.useSSL">false</stringProp>
+          <stringProp name="SMTPSampler.useStartTLS">true</stringProp>
+          <stringProp name="SMTPSampler.trustAllCerts">false</stringProp>
+          <stringProp name="SMTPSampler.enforceStartTLS">false</stringProp>
+          <stringProp name="SMTPSampler.useLocalTrustStore">false</stringProp>
+          <stringProp name="SMTPSampler.trustStoreToUse"></stringProp>
+        </MailReaderSampler>
+        <hashTree>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String response = prev.getSubResults()[0].getSubResults()[0].getResponseDataAsString(); 
+
+vars.put(&quot;response&quot;, response);</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">PIN</stringProp>
+            <stringProp name="RegexExtractor.regex">myorder-app://MyOrder/verifyLogin/(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth Login" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;userName&quot;: &quot;nehangomes@gmail.com&quot;,&#xd;
+    &quot;pin&quot;: &quot;${PIN}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/auth/login</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">TOKEN</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;key&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RaboWallet User Info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/user/raboWallet/info</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">MandateNumber</stringProp>
+            <stringProp name="RegexExtractor.regex">,&quot;mandateNumber&quot;:&quot;(.+?)&quot;,</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supported Parking Location" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/supportedLocations</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/info?pointId=8004</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name"></stringProp>
+                <stringProp name="Header.value"></stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Session-Calculate Price" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/session?pointId=8004&amp;endTime=23:59</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">ID</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;id&quot;:(.+?),</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">ParkingCost</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;price&quot;:{&quot;amount&quot;:&quot;(.+?)&quot;,&quot;currency&quot;:&quot;EUR&quot;}</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">TransactionCost</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;transactionPrice&quot;:{&quot;amount&quot;:&quot;(.+?)&quot;,&quot;currency&quot;:&quot;EUR&quot;}</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">double a= new Double(vars.get(&quot;ParkingCost&quot;)); 
+double b= new Double(vars.get(&quot;TransactionCost&quot;)); 
+double x = (a+b); 
+int feeTotal;
+int i = x * 100;
+vars.put(&quot;feeTotal&quot;,Integer.toString(i));
+//vars.put(&quot;feeTotal&quot;,Double.toString(x));  
+
+//int i = feeTotal.intValue();
+print(a); 
+print(b); 
+print(x); </stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Checkout" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/${ID}/checkout?licensePlate=ABCD12</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Pay" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;orderId&quot;:${ID},&#xd;
+    &quot;paymentMethod&quot;:&quot;EMANDATE&quot;,&#xd;
+    &quot;price&quot;:${feeTotal},&#xd;
+    &quot;description&quot;:&quot;abcd&quot;,&#xd;
+    &quot;mandateInfo&quot;: {&#xd;
+        &quot;mandateNumber&quot;:&quot;${MandateNumber}&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/payment/pay</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Current Parking Transaction" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/session</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Stop Parking" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/${ID}/stop</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Transaction" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/order/history?offset=0&amp;limit=20</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Parking for a new user " enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1445080252000</longProp>
+        <longProp name="ThreadGroup.end_time">1445080252000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+          <stringProp name="filename">/Users/stevangomes/Documents/RaboWallet Registration.csv</stringProp>
+          <stringProp name="fileEncoding"></stringProp>
+          <stringProp name="variableNames">mobileCustomerId,email,firstName,lastName,accountHolderName</stringProp>
+          <stringProp name="delimiter">,</stringProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Register a New RaboWallet User" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+        &quot;mobileCustomerId&quot; : &quot;${mobileCustomerId}&quot;,&#xd;
+        &quot;accountNumber&quot; : &quot;NL62INGB0000849982&quot;,&#xd;
+        &quot;accountBIC&quot; : &quot;INGBNL2A&quot;,&#xd;
+        &quot;accountHolderName&quot; : &quot;${accountHolderName}&quot;,&#xd;
+        &quot;firstName&quot; : &quot;${firstName}&quot;,&#xd;
+        &quot;lastName&quot; : &quot;${lastName}&quot;,&#xd;
+        &quot;email&quot; : &quot;${email}&quot;,&#xd;
+        &quot;mobilePhone&quot; : &quot;+31612345678&quot;,&#xd;
+        &quot;dateOfBirth&quot;: &quot;29-04-1989&quot;,&#xd;
+        &quot;widgetVersion&quot; : &quot;1.3.4&quot;,&#xd;
+        &quot;countryCode&quot;: &quot;NL&quot;,&#xd;
+        &quot;city&quot;: &quot;Amsterdam&quot;,&#xd;
+        &quot;street&quot;: &quot;testStreet&quot;,&#xd;
+        &quot;number&quot;: &quot;13-A&quot;,&#xd;
+        &quot;postCode&quot;: &quot;8001AB&quot;,&#xd;
+        &quot;signatureImageBase64&quot;: &quot;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&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/user/raboWallet/register</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">TOKEN</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;key&quot;:&quot;(.+?)&quot;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <MailReaderSampler guiclass="MailReaderSamplerGui" testclass="MailReaderSampler" testname="Mail Reader Sampler" enabled="true">
+          <stringProp name="host_type">imaps</stringProp>
+          <stringProp name="folder">INBOX</stringProp>
+          <stringProp name="host">imap.gmail.com</stringProp>
+          <stringProp name="port">993</stringProp>
+          <stringProp name="username">stevengomez073@gmail.com</stringProp>
+          <stringProp name="password">nany@123</stringProp>
+          <intProp name="num_messages">-1</intProp>
+          <boolProp name="delete">false</boolProp>
+          <stringProp name="SMTPSampler.useSSL">false</stringProp>
+          <stringProp name="SMTPSampler.useStartTLS">true</stringProp>
+          <stringProp name="SMTPSampler.trustAllCerts">false</stringProp>
+          <stringProp name="SMTPSampler.enforceStartTLS">false</stringProp>
+          <stringProp name="SMTPSampler.useLocalTrustStore">false</stringProp>
+          <stringProp name="SMTPSampler.trustStoreToUse"></stringProp>
+        </MailReaderSampler>
+        <hashTree>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">String response = prev.getSubResults()[1].getSubResults()[0].getResponseDataAsString(); 
+vars.put(&quot;response&quot;, response);</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">PIN</stringProp>
+            <stringProp name="RegexExtractor.regex"> &lt;td class=&quot;passbook-wrapper-td woordcode&quot; style=&quot;font-size: 1.64em;font-family: &apos;Helvetica Neue&apos;, Helvetica, Arial, Verdana, sans-serif;font-weight: 300;vertical-align: middle;border-color: transparent;background-color: #fff;color: #4D5E7C;border: 1px solid #999;border-radius: 8px;height: 60px;width: 250px;&quot;&gt;\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s([^&lt;&gt;]*)\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s&lt;/td&gt;</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Authentication Verification" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+&quot;userName&quot;:&quot;${email}&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/auth/verify/${PIN}</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RaboWallet Info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/user/raboWallet/info</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">MandateNumber</stringProp>
+            <stringProp name="RegexExtractor.regex">,&quot;mandateNumber&quot;:&quot;(.+?)&quot;,</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Supported Parking Location" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/supportedLocations</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Info" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/info?pointId=8004</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name"></stringProp>
+                <stringProp name="Header.value"></stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Session-Calculate Price" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/session?endTime=23:24&amp;pointId=8004</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">ID</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;id&quot;:(.+?),</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">ParkingCost</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;price&quot;:{&quot;amount&quot;:&quot;(.+?)&quot;,&quot;currency&quot;:&quot;EUR&quot;}</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+            <stringProp name="RegexExtractor.refname">TransactionCost</stringProp>
+            <stringProp name="RegexExtractor.regex">&quot;transactionPrice&quot;:{&quot;amount&quot;:&quot;(.+?)&quot;,&quot;currency&quot;:&quot;EUR&quot;}</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">none</stringProp>
+            <stringProp name="RegexExtractor.match_number"></stringProp>
+            <stringProp name="Sample.scope">all</stringProp>
+          </RegexExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="script">double a= new Double(vars.get(&quot;ParkingCost&quot;)); 
+double b= new Double(vars.get(&quot;TransactionCost&quot;)); 
+double x = (a+b); 
+int feeTotal;
+int i = x * 100;
+vars.put(&quot;feeTotal&quot;,Integer.toString(i));
+//vars.put(&quot;feeTotal&quot;,Double.toString(x));  
+
+//int i = feeTotal.intValue();
+print(a); 
+print(b); 
+print(x); </stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Checkout" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/${ID}/checkout?licensePlate=ABCD12</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Pay" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;orderId&quot;:${ID},&#xd;
+    &quot;paymentMethod&quot;:&quot;EMANDATE&quot;,&#xd;
+    &quot;price&quot;:${feeTotal},&#xd;
+    &quot;description&quot;:&quot;abcd&quot;,&#xd;
+    &quot;mandateInfo&quot;: {&#xd;
+        &quot;mandateNumber&quot;:&quot;${MandateNumber}&quot;&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/payment/pay</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Current Parking Transaction" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/session</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Stop Parking" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/parking/${ID}/stop</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Parking Transaction" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ci-m.myorder.nl</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/api/v1/order/history?offset=0&amp;limit=20</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">${TOKEN}</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Accept</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Platform</stringProp>
+                <stringProp name="Header.value">ANDROID</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">X-Channel</stringProp>
+                <stringProp name="Header.value">MYORDER</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
